@@ -11,7 +11,7 @@ const BookSchema = new Schema({
 })
 
 
-BookSchema.virtual('rul').get(function(){
+BookSchema.virtual('url').get(function(){
     return `/catalog/book/${this.id}`
 })
 
