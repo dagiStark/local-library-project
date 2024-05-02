@@ -1,8 +1,7 @@
 const BookInstance = require("../models/bookinstance");
 const asyncHandler = require("express-async-handler");
-const {body, validationResult} = require('express-validator')
-const Book = require('../models/book')
-
+const { body, validationResult } = require("express-validator");
+const Book = require("../models/book");
 
 // Display list of all BookInstances.
 exports.bookinstance_list = asyncHandler(async (req, res, next) => {
@@ -13,7 +12,6 @@ exports.bookinstance_list = asyncHandler(async (req, res, next) => {
     bookinstance_list: allBookInstances,
   });
 });
-
 
 // Display detail page for a specific BookInstance.
 exports.bookinstance_detail = asyncHandler(async (req, res, next) => {
@@ -34,7 +32,6 @@ exports.bookinstance_detail = asyncHandler(async (req, res, next) => {
   });
 });
 
-
 // Display BookInstance create form on GET.
 exports.bookinstance_create_get = asyncHandler(async (req, res, next) => {
   const allBooks = await Book.find({}, "title").sort({ title: 1 }).exec();
@@ -44,7 +41,6 @@ exports.bookinstance_create_get = asyncHandler(async (req, res, next) => {
     book_list: allBooks,
   });
 });
-
 
 // Handle BookInstance create on POST.
 exports.bookinstance_create_post = [
@@ -94,15 +90,28 @@ exports.bookinstance_create_post = [
   }),
 ];
 
-
 // Display BookInstance delete form on GET.
 exports.bookinstance_delete_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: BookInstance delete GET");
+  const bookInstance = await BookInstance.findById(req.params.id).exec();
+  if (bookInstance === null) {
+    res.redirect("/catalog/bookinstances");
+  } else {
+    res.render("instance_delete", {
+      title: "Delete Instance",
+      instance: bookInstance,
+    });
+  }
 });
 
 // Handle BookInstance delete on POST.
 exports.bookinstance_delete_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: BookInstance delete POST");
+  const bookInstance = await BookInstance.findById(req.params.id).exec();
+  if (bookInstance === null) {
+    res.redirect("/catalog/bookinstances");
+  } else {
+    await BookInstance.findByIdAndDelete(req.body.instanceid).exec();
+    res.redirect("/catalog/bookinstances");
+  }
 });
 
 // Display BookInstance update form on GET.
