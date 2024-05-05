@@ -10,6 +10,7 @@ const AuthorSchema = new Schema({
     date_of_death: {type: Date}
 })
 
+// This can be useful for simplifying data access and manipulation in your application without actually storing the computed field in the database.
 
 AuthorSchema.virtual('name').get(function(){
 
