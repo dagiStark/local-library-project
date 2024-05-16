@@ -14,7 +14,7 @@ const app = express();
 // setting up mongo connection
 
 const mongoose = require('mongoose');
-mongoose.set('strictQuery', false);
+mongoose.set('strictQuery', false);  // Strict mode enforces schema validation for all queries,
 const mongoDB = "mongodb+srv://dagigelaneh26:jdMSpgXulOSQf4bR@cluster0.5rpnz9o.mongodb.net/local_library?retryWrites=true&w=majority&appName=Cluster0";
 
 main().catch((err)=>{console.log(err)});
